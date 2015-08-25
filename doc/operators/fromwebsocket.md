@@ -1,4 +1,4 @@
-### `Rx.DOM.fromWebSocket(url, protocol, [observerOrOnNext])`
+### `Rx.DOM.fromWebSocket(url, protocol, [openObserver], [closingObserver])`
 [&#x24C8;](https://github.com/Reactive-Extensions/RxJS-DOM/blob/master/src/websocket.js "View in source")
 
 Creates a WebSocket Subject with a given URL, protocol and an optional observer for the open event.
