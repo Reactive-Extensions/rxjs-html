@@ -142,7 +142,7 @@ function normalizeAjaxSuccessEvent(e, xhr, settings) {
           }
         }
 
-        if(!!xhr.upload || (!('withCredentials' in xhr) && !!root.XDomainRequest)) {
+        if(xhr.upload === null || (!('withCredentials' in xhr) && !!root.XDomainRequest)) {
           xhr.onload = function(e) {
             if(settings.progressObserver) {
               settings.progressObserver.onNext(e);
