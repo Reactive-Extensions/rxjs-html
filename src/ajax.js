@@ -205,7 +205,7 @@ function normalizeAjaxSuccessEvent(e, xhr, settings) {
    * @param {String} url The URL to GET
    * @returns {Observable} The observable sequence which contains the response from the Ajax GET.
    */
-  var observableGet = dom.get = function (url) {
+  dom.get = function (url) {
     return ajaxRequest({ url: url });
   };
 
