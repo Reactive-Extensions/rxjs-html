@@ -235,6 +235,92 @@
     requests[0].respond(500, { 'Content-Type': 'application/json' }, 'error');
   });
 
+  test('ajax arraybuffer success', function () {
+    var source = Rx.DOM.ajax({
+      url: '/products/1/image',
+      method: 'GET',
+      responseType: 'arraybuffer',
+      headers: {
+        'X-Requested-With': 'RxJS',
+        'Accept': 'application/octet-stream'
+      }
+    });
+
+    source.subscribe(
+      function (x) {
+        // Ensure GET by default
+        equal('GET', x.xhr.method);
+
+        // Ensure status
+        equal(200, x.status);
+
+        // Ensure async
+        ok(x.xhr.async);
+
+        //Assert equality for the message
+        ok(x.xhr.response instanceof ArrayBuffer);
+
+        var data = '';
+        var bytes = new Uint8Array(x.xhr.response);
+        for (var i = 0; i < bytes.byteLength; i++) {
+          data += String.fromCharCode(bytes[i]);
+        }
+        equal('a test array buffer', data);
+      },
+      function () {
+        ok(false);
+      },
+      function () {
+        ok(true);
+      }
+    );
+
+    requests[0].respond(200, { 'Content-Type': 'application/octet-stream' }, 'a test array buffer');
+  });
+
+  asyncTest('ajax blob success', function () {
+    var source = Rx.DOM.ajax({
+      url: '/products/2/image',
+      method: 'GET',
+      responseType: 'blob',
+      headers: {
+        'X-Requested-With': 'RxJS',
+        'Accept': 'application/octet-stream'
+      }
+    });
+
+    source.subscribe(
+      function (x) {
+        // Ensure GET by default
+        equal('GET', x.xhr.method);
+
+        // Ensure status
+        equal(200, x.status);
+
+        // Ensure async
+        ok(x.xhr.async);
+
+        //Assert equality for the message
+        ok(x.xhr.response instanceof Blob);
+
+        var blobReader = new FileReader();
+        blobReader.onloadend = function () {
+          start();
+          equal('a test blob', blobReader.result);
+        };
+        blobReader.readAsText(x.xhr.response);
+      },
+      function () {
+        ok(false);
+      },
+      function () {
+        ok(true);
+      }
+    );
+
+    requests[0].respond(200, { 'Content-Type': 'application/octet-stream' }, 'a test blob');
+  });
+
   test('ajax failure settings', function () {
     var source = Rx.DOM.ajax({
       url: '/products',
@@ -442,7 +528,7 @@
       }
     );
 
-    requests[0].respond(500, { 'Content-Type': 'application/json' }, 'error');
+    requests[0].respond(500, { 'Content-Type': 'text/plain' }, 'error');
   });
 
 
@@ -483,7 +569,7 @@
         ok(x.xhr.async);
 
         // Assert equality for the message
-        equal('error', x.xhr.responseText);
+        ok(x.xhr.response.error);
 
         // Assert type of error
         equal('error', x.type);
@@ -493,7 +579,7 @@
       }
     );
 
-    requests[0].respond(500, { 'Content-Type': 'application/json' }, 'error');
+    requests[0].respond(500, { 'Content-Type': 'application/json' }, '{ "error": true }');
   });
 
 }());

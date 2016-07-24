@@ -35,9 +35,9 @@
     }
   }
 
-  function normalizeAjaxSuccessEvent(e, xhr, settings) {
+  function normalizeAjaxSuccessEvent(e, xhr) {
     var response = ('response' in xhr) ? xhr.response : xhr.responseText;
-    response = settings.responseType === 'json' ? JSON.parse(response) : response;
+    response = xhr.responseType === 'json' && response && typeof response === 'string' ? JSON.parse(response) : response;
     return {
       response: response,
       status: xhr.status,
@@ -74,7 +74,7 @@
       var processResponse = function(xhr, e){
         var status = xhr.status === 1223 ? 204 : xhr.status;
         if ((status >= 200 && status <= 300) || status === 0 || status === '') {
-          o.onNext(normalizeSuccess(e, xhr, settings));
+          o.onNext(normalizeSuccess(e, xhr));
           o.onCompleted();
         } else {
           o.onError(settings.normalizeError(e, xhr, 'error'));
@@ -95,9 +95,7 @@
           xhr.open(settings.method, settings.url, settings.async);
         }
 
-        if (settings.responseType === 'blob') {
-          xhr.responseType = 'blob';
-        }
+        xhr.responseType = settings.responseType;
         
         var headers = settings.headers;
         for (var header in headers) {
