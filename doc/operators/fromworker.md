@@ -10,7 +10,7 @@ Creates a Web Worker with a given URL as a Subject.
 
 #### Example
 ```js
-var worker = Rx.DOM.fromWebWorker('worker.js');
+var worker = Rx.DOM.fromWorker('worker.js');
 
 worker.subscribe(function (e) {
   console.log(e.data);
