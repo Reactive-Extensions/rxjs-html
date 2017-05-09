@@ -7,7 +7,7 @@ Creates a WebSocket Subject with a given URL, protocol and an optional observer 
 1. `url` *(String)*: The URL of the WebSocket.
 2. `protocol` *(String)*: The protocol of the WebSocket.
 3. `openObserver` *(`Rx.Observer`)*: An optional Observer to capture the open event.
-4. `closingObserver` *(`Rx.Observer`)*: An optional Observer capture the the moment before the underlying socket is closed.
+4. `closingObserver` *(`Rx.Observer`)*: An optional Observer capture the moment before the underlying socket is closed.
 
 #### Returns
 *(`Subject`)*: A Subject which wraps a WebSocket.
