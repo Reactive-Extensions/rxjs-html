@@ -1,7 +1,7 @@
 ### `Rx.Scheduler.requestAnimationFrame`
 [&#x24C8;](https://github.com/Reactive-Extensions/RxJS-DOM/blob/master/src/requestanimationframescheduler.js "View in source")
 
-Gets an `Rx.Scheduler` that schedules schedules work on the `window.requestAnimationFrame` for immediate actions and defaults to `window.setTimeout` if not available.
+Gets an `Rx.Scheduler` that schedules work on the `window.requestAnimationFrame` for immediate actions and defaults to `window.setTimeout` if not available.
 
 #### Example
 ```js
