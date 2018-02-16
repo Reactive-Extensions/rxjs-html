@@ -23,7 +23,7 @@ var source = Rx.DOM.geolocation.getCurrentPosition();
 
 var subscription = source.subscribe(
   function (pos) {
-    console.log('Next:' + position.coords.latitude + ',' + position.coords.longitude);
+    console.log('Next:' + pos.coords.latitude + ',' + pos.coords.longitude);
   },
   function (err) {
     var message = '';
